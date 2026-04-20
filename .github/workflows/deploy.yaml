@@ -1,5 +1,12 @@
-jobs:
+name: Deploy
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
@@ -14,12 +21,11 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
-      # TODO 01 - Add a step to run tests
       - name: Run tests
         run: go test ./...
 
   compile:
-    needs: test   # TODO 02 - Make sure that the `test` job is run before `compile`
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
